@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasksfront/controllers/task_controller.dart';
+import 'package:tasksfront/create_task.dart';
 import 'package:tasksfront/models/task.dart';
 import 'package:tasksfront/widgets/task_item.dart';
 
@@ -28,6 +29,7 @@ class _HomeState extends State<Home> {
                 final Task task = tasks[index];
                 return TaskItem(
                   task: task,
+                  onChecked: () {setState(() {});},
                 );
               },
             );
@@ -37,6 +39,16 @@ class _HomeState extends State<Home> {
             return const Center(child: CircularProgressIndicator());
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Navigate to the CreateTaskPage to create a new task
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateTaskPage()),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

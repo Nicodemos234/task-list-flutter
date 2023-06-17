@@ -36,7 +36,7 @@ class TaskController {
       body: jsonEncode(task.toJson()),
     );
     if (response.statusCode == 200) {
-      final dynamic json = jsonDecode(response.body);
+      final dynamic json = jsonDecode(response.body)['data'];
       return Task.fromJson(json);
     } else {
       throw Exception('Failed to update task');
