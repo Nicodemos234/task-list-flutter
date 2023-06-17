@@ -45,4 +45,26 @@ class Task {
       'deletedAt': deletedAt?.toIso8601String(),
     };
   }
+
+  Task copyWith({
+    int? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? endDate,
+    bool? daily,
+    bool? done,
+    String? title,
+    DateTime? deletedAt,
+  }) {
+    return Task(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      endDate: endDate ?? this.endDate,
+      daily: daily ?? this.daily,
+      done: done ?? this.done,
+      title: title ?? this.title,
+      deletedAt: deletedAt ?? this.deletedAt,
+    );
+  }
 }

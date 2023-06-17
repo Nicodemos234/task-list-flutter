@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tasksfront/controllers/task_controller.dart';
+import 'package:tasksfront/models/task.dart';
+import 'package:tasksfront/widgets/task_item.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,8 +17,26 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Tasks'),
       ),
-      body: const Center(
-        child: Text('Tasks'),
+      body: FutureBuilder<List<Task>>(
+        future: TaskController.getTasks(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List<Task> tasks = snapshot.data!;
+            return ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                final Task task = tasks[index];
+                return TaskItem(
+                  task: task,
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text('${snapshot.error}'));
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }

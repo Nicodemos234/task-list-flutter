@@ -8,7 +8,7 @@ class TaskController {
   static Future<List<Task>> getTasks() async {
     final response = await http.get(Uri.parse(_baseUrl));
     if (response.statusCode == 200) {
-      final List<dynamic> jsonList = jsonDecode(response.body);
+      final List<dynamic> jsonList = jsonDecode(response.body)['data'];
       return jsonList.map((json) => Task.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load tasks');
@@ -30,7 +30,7 @@ class TaskController {
   }
 
   static Future<Task> updateTask(Task task) async {
-    final response = await http.put(
+    final response = await http.patch(
       Uri.parse('$_baseUrl/${task.id}'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(task.toJson()),
